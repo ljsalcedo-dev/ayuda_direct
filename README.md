@@ -40,6 +40,22 @@ Plug into a real LGU/DSWD funding wallet and a simple mobile front end with cash
 
 ---
 
+## Getting Started
+
+### Frontend (Freighter wallet + XLM transfers)
+
+**Prerequisites:** Node.js ≥ 18, npm, and the [Freighter browser extension](https://freighter.app) set to **Testnet**.
+
+```bash
+cd frontend
+npm install
+npm run dev        # opens http://localhost:5173
+```
+
+Connect Freighter, fund your Testnet account at [friendbot.stellar.org](https://friendbot.stellar.org), then send XLM directly from the UI.
+
+### Smart contract (Soroban)
+
 ## Prerequisites
 
 - Rust toolchain. **Verified on `rustc` 1.75 with `soroban-sdk` 21.7.7** (the pinned `Cargo.lock` reproduces this exactly). Any newer Rust also works.

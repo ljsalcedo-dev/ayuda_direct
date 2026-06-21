@@ -98,16 +98,15 @@ export default function App() {
           <ol className="space-y-2 text-sm text-slate-300">
             <li className="flex gap-2">
               <span className="text-teal-500 font-bold shrink-0">1.</span>
-              A government unit or NGO <strong>funds</strong> the on-chain pool once.
+              <span>A government unit or NGO <strong>funds</strong> the on-chain pool once.</span>
             </li>
             <li className="flex gap-2">
               <span className="text-teal-500 font-bold shrink-0">2.</span>
-              The admin <strong>enrolls</strong> beneficiaries — any Stellar address.
+              <span>The admin <strong>enrolls</strong> beneficiaries — any Stellar address.</span>
             </li>
             <li className="flex gap-2">
               <span className="text-teal-500 font-bold shrink-0">3.</span>
-              Each beneficiary <strong>claims</strong> their fixed stipend directly from the contract,
-              at most once per period — enforced by the ledger clock, no operator needed.
+              <span>Each beneficiary <strong>claims</strong> their fixed stipend directly from the contract, at most once per period — enforced by the ledger clock, no operator needed.</span>
             </li>
           </ol>
         </div>

@@ -34,8 +34,8 @@ export function BalanceCard({ balance, isLoading, walletConnected, onRefresh }: 
           <div className="h-4 w-24 rounded-lg bg-slate-800 animate-pulse" />
         </div>
       ) : balance !== null ? (
-        <div>
-          <p className="text-4xl font-bold text-white tabular-nums">
+        <div className="min-w-0">
+          <p className="text-2xl font-bold text-white tabular-nums truncate" title={`${formatXLM(balance)} XLM`}>
             {formatXLM(balance)}
           </p>
           <p className="text-sm text-slate-400 mt-1">XLM · Stellar Testnet</p>

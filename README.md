@@ -40,6 +40,22 @@ Plug into a real LGU/DSWD funding wallet and a simple mobile front end with cash
 
 ---
 
+## Screenshots
+
+**Landing page — connect your wallet**
+![Landing page](./docs/screenshots/02-landing.png)
+
+**Wallet connected — balance displayed**
+![Wallet connected with balance](./docs/screenshots/03-wallet-connected.png)
+
+**Send form filled — Freighter signing prompt**
+![Send form with Freighter confirm](./docs/screenshots/06-freighter-confirm.png)
+
+**Transaction confirmed — result shown on-chain**
+![Transaction confirmed](./docs/screenshots/07-tx-confirmed.png)
+
+---
+
 ## Getting Started
 
 ### Frontend (Freighter wallet + XLM transfers)
@@ -100,9 +116,7 @@ stellar contract invoke --id $CONTRACT --source gov --network testnet \
 - **Explorer link:** https://stellar.expert/explorer/testnet/contract/CA27HN2BIH67SBM3PHD3DVYJAFM4SRYUVN5ZGNVCZCEE6ZBHBJSLUA6T
 - **Block explorer screenshot:**
 
-  `![Ayuda Direct contract on Stellar Expert](./contract-explorer.png)`
-
-  Add a screenshot of the explorer link above, saved as `contract-explorer.png` next to this README, so it renders inline here.
+  ![Ayuda Direct contract on Stellar Expert](./docs/screenshots/01-contract-explorer.png)
 
 ## Sample invocation
 

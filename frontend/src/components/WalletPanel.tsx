@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { truncateKey } from '../lib/stellar';
 
 interface WalletPanelProps {
+  /** 'header' = compact inline widget for the site header when connected.
+   *  'page'   = full connect UI shown in the main content area. */
+  variant: 'header' | 'page';
   publicKey: string | null;
   walletConnected: boolean;
   isConnecting: boolean;
@@ -10,6 +13,7 @@ interface WalletPanelProps {
 }
 
 export function WalletPanel({
+  variant,
   publicKey,
   walletConnected,
   isConnecting,
@@ -25,88 +29,75 @@ export function WalletPanel({
     setTimeout(() => setCopied(false), 2000);
   }
 
+  // ── Header variant: compact strip used inside the <header> ─────────────
+  if (variant === 'header') {
+    if (!walletConnected || !publicKey) return null;
+    return (
+      <div className="flex items-center gap-3">
+        <button
+          onClick={copyAddress}
+          title={publicKey}
+          className="flex items-center gap-1.5 rounded-md px-2 py-1 font-mono text-xs text-ink-2 hover:text-ink hover:bg-panel transition-colors"
+        >
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-jade shrink-0" />
+          {truncateKey(publicKey, 6)}
+          {copied ? <CheckIcon /> : <CopyIcon />}
+        </button>
+        <button
+          onClick={onDisconnect}
+          className="rounded-md px-3 py-1 text-xs font-medium text-ink-3 border border-rim hover:border-rim hover:text-ink hover:bg-panel transition-colors"
+        >
+          Disconnect
+        </button>
+      </div>
+    );
+  }
+
+  // ── Page variant: full connect UI in the main content area ──────────────
   return (
-    <div className="rounded-2xl bg-slate-900 border border-slate-800 p-6">
-      <h2 className="text-sm font-semibold uppercase tracking-widest text-slate-400 mb-4">
-        Freighter Wallet
-      </h2>
-
-      {!walletConnected ? (
-        <div className="space-y-4">
-          <p className="text-slate-400 text-sm leading-relaxed">
-            Connect your Freighter wallet to interact with Ayuda Direct on Stellar Testnet.
-          </p>
-
-          <div className="rounded-lg bg-amber-950/50 border border-amber-800/50 p-3 text-xs text-amber-300">
-            <span className="font-semibold">Prerequisite:</span> Install the{' '}
-            <a
-              href="https://freighter.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-amber-100"
-            >
-              Freighter browser extension
-            </a>{' '}
-            and switch it to <strong>Testnet</strong> before connecting.
-          </div>
-
-          <button
-            onClick={onConnect}
-            disabled={isConnecting}
-            className="w-full flex items-center justify-center gap-2 rounded-xl bg-teal-600 hover:bg-teal-500 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-3 font-semibold text-white transition-colors"
+    <div className="space-y-5">
+      <div className="rounded-lg border border-topaz-ghost bg-topaz-ghost px-4 py-3 text-sm text-topaz flex items-start gap-2.5">
+        <span className="mt-0.5 shrink-0 text-base leading-none">!</span>
+        <span>
+          Install the{' '}
+          <a
+            href="https://freighter.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 font-medium hover:text-ink transition-colors"
           >
-            {isConnecting ? (
-              <>
-                <SpinnerIcon />
-                Connecting…
-              </>
-            ) : (
-              <>
-                <WalletIcon />
-                Connect Freighter
-              </>
-            )}
-          </button>
-        </div>
-      ) : (
-        <div className="space-y-4">
-          <div className="rounded-xl bg-slate-800 p-4">
-            <p className="text-xs text-slate-400 mb-1">Connected address</p>
-            <div className="flex items-center gap-2 min-w-0">
-              <span className="font-mono text-sm text-teal-300 truncate flex-1">
-                {truncateKey(publicKey!, 8)}
-              </span>
-              <button
-                onClick={copyAddress}
-                title="Copy full address"
-                className="shrink-0 rounded-lg p-1.5 text-slate-400 hover:text-slate-100 hover:bg-slate-700 transition-colors"
-              >
-                {copied ? <CheckIcon /> : <CopyIcon />}
-              </button>
-            </div>
-            <p className="mt-2 text-xs text-emerald-400 flex items-center gap-1">
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              Stellar Testnet
-            </p>
-          </div>
+            Freighter extension
+          </a>{' '}
+          and switch it to <strong className="font-semibold">Testnet</strong> before connecting.
+        </span>
+      </div>
 
-          <button
-            onClick={onDisconnect}
-            className="w-full rounded-xl border border-slate-700 hover:border-slate-500 px-4 py-2.5 text-sm text-slate-300 hover:text-white transition-colors"
-          >
-            Disconnect
-          </button>
-        </div>
-      )}
+      <button
+        onClick={onConnect}
+        disabled={isConnecting}
+        className="w-full flex items-center justify-center gap-2 rounded-lg bg-gold text-gold-deep hover:bg-gold-2 disabled:opacity-50 disabled:cursor-not-allowed px-5 py-3 text-sm font-semibold transition-colors"
+      >
+        {isConnecting ? (
+          <>
+            <SpinnerIcon />
+            Connecting…
+          </>
+        ) : (
+          <>
+            <WalletIcon />
+            Connect Freighter
+          </>
+        )}
+      </button>
     </div>
   );
 }
 
-// ── Inline icons ──────────────────────────────────────────────────────────────
+// ── Icons ─────────────────────────────────────────────────────────────────────
 
 function WalletIcon() {
   return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-1" />
       <path strokeLinecap="round" strokeLinejoin="round" d="M16 12a2 2 0 1 1 4 0 2 2 0 0 1-4 0Z" />
     </svg>
@@ -124,7 +115,7 @@ function SpinnerIcon() {
 
 function CopyIcon() {
   return (
-    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
       <rect x="9" y="9" width="13" height="13" rx="2" />
       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
     </svg>
@@ -133,7 +124,7 @@ function CopyIcon() {
 
 function CheckIcon() {
   return (
-    <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+    <svg className="w-3 h-3 text-jade" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
     </svg>
   );

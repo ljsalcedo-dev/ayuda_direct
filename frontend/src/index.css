@@ -1,7 +1,58 @@
 @import "tailwindcss";
 
+@theme {
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  /* Warm stone-dark palette */
+  --color-canvas:   oklch(11%   0.006 55);   /* page background */
+  --color-panel:    oklch(15.5% 0.007 55);   /* raised surfaces */
+  --color-control:  oklch(20%   0.009 55);   /* inputs, elevated */
+  --color-rim:      oklch(27%   0.010 55);   /* borders */
+  --color-rim-dim:  oklch(21%   0.008 55);   /* subtle dividers */
+
+  /* Text */
+  --color-ink:      oklch(92%   0.006 80);   /* primary */
+  --color-ink-2:    oklch(63%   0.012 72);   /* secondary */
+  --color-ink-3:    oklch(43%   0.009 65);   /* muted / disabled */
+
+  /* Accent: warm gold */
+  --color-gold:       oklch(76%  0.150 62);
+  --color-gold-2:     oklch(81%  0.130 62);
+  --color-gold-ghost: oklch(76%  0.150 62 / 0.14);
+  --color-gold-deep:  oklch(20%  0.040 62);
+
+  /* Semantic */
+  --color-jade:         oklch(68%  0.160 145);
+  --color-jade-ghost:   oklch(68%  0.160 145 / 0.12);
+  --color-crimson:      oklch(62%  0.180 22);
+  --color-crimson-ghost:oklch(62%  0.180 22  / 0.12);
+  --color-topaz:        oklch(75%  0.140 72);
+  --color-topaz-ghost:  oklch(75%  0.140 72  / 0.12);
+}
+
 @layer base {
+  html {
+    font-family: var(--font-sans);
+  }
+
   body {
-    @apply bg-slate-950 text-slate-100 antialiased;
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--color-gold-ghost);
+    color: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }

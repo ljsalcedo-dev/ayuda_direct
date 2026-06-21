@@ -3,65 +3,64 @@ import { formatXLM } from '../lib/stellar';
 interface BalanceCardProps {
   balance: string | null;
   isLoading: boolean;
-  walletConnected: boolean;
   onRefresh: () => Promise<void>;
 }
 
-export function BalanceCard({ balance, isLoading, walletConnected, onRefresh }: BalanceCardProps) {
+export function BalanceCard({ balance, isLoading, onRefresh }: BalanceCardProps) {
   return (
-    <div className="rounded-2xl bg-slate-900 border border-slate-800 p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-slate-400">
-          XLM Balance
-        </h2>
-        {walletConnected && (
-          <button
-            onClick={onRefresh}
-            disabled={isLoading}
-            title="Refresh balance"
-            className="rounded-lg p-1.5 text-slate-400 hover:text-slate-100 hover:bg-slate-800 disabled:opacity-40 transition-colors"
-          >
-            <RefreshIcon spinning={isLoading} />
-          </button>
-        )}
+    <section aria-label="XLM balance">
+      <div className="flex items-baseline justify-between mb-1">
+        <p className="text-xs font-semibold uppercase tracking-widest text-ink-3">Balance</p>
+        <button
+          onClick={onRefresh}
+          disabled={isLoading}
+          title="Refresh balance"
+          className="flex items-center gap-1 text-xs text-ink-3 hover:text-ink-2 disabled:opacity-40 transition-colors"
+        >
+          <RefreshIcon spinning={isLoading} />
+          Refresh
+        </button>
       </div>
 
-      {!walletConnected ? (
-        <p className="text-slate-500 text-sm">Connect your wallet to see your balance.</p>
-      ) : isLoading ? (
-        <div className="space-y-2">
-          <div className="h-8 w-40 rounded-lg bg-slate-800 animate-pulse" />
-          <div className="h-4 w-24 rounded-lg bg-slate-800 animate-pulse" />
+      {isLoading ? (
+        <div className="space-y-2 py-1">
+          <div className="h-10 w-52 rounded-md bg-panel animate-pulse" />
+          <div className="h-4 w-28 rounded-md bg-panel animate-pulse" />
         </div>
       ) : balance !== null ? (
-        <div className="min-w-0">
-          <p className="text-2xl font-bold text-white tabular-nums truncate" title={`${formatXLM(balance)} XLM`}>
+        <div>
+          <p
+            className="text-5xl font-bold text-ink tabular-nums leading-tight"
+            title={`${balance} XLM`}
+          >
             {formatXLM(balance)}
           </p>
-          <p className="text-sm text-slate-400 mt-1">XLM · Stellar Testnet</p>
+          <p className="mt-1.5 text-sm text-ink-2">
+            XLM <span className="text-ink-3">·</span> Stellar Testnet
+          </p>
         </div>
       ) : (
-        <div className="rounded-lg bg-amber-950/50 border border-amber-800/50 p-3 text-sm text-amber-300">
-          Account not funded yet. Get free Testnet XLM at{' '}
+        <div className="rounded-lg border border-topaz-ghost bg-topaz-ghost px-4 py-3 text-sm text-topaz leading-relaxed">
+          Account not found on Testnet. Fund it at{' '}
           <a
             href="https://friendbot.stellar.org"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline font-medium hover:text-amber-100"
+            className="underline underline-offset-2 font-medium hover:text-ink transition-colors"
           >
             friendbot.stellar.org
           </a>
-          , then click refresh.
+          , then refresh.
         </div>
       )}
-    </div>
+    </section>
   );
 }
 
 function RefreshIcon({ spinning }: { spinning: boolean }) {
   return (
     <svg
-      className={`w-4 h-4 ${spinning ? 'animate-spin' : ''}`}
+      className={`w-3.5 h-3.5 ${spinning ? 'animate-spin' : ''}`}
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"

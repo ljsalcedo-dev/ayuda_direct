@@ -55,7 +55,9 @@ export function truncateKey(key: string, chars = 6): string {
 export function formatXLM(balance: string): string {
   const n = parseFloat(balance);
   if (isNaN(n)) return balance;
-  return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 7 });
+  // Cap at 2 decimals for large balances to prevent display overflow
+  const maxDecimals = n >= 1_000 ? 2 : 7;
+  return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: maxDecimals });
 }
 
 // ── Horizon balance fetch ─────────────────────────────────────────────────────
